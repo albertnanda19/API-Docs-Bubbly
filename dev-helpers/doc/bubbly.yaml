@@ -111,8 +111,6 @@ paths:
                       refresh_token:
                         type: string
                         example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
-        '401':
-          $ref: '#/components/responses/InvalidToken'
         '405':
           $ref: '#/components/responses/MethodNotAllowed'
         '500':
@@ -222,6 +220,10 @@ paths:
                       likes: 30
                       store_name: "Viels Design Studio"
                       image: ""
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
 components:
   securitySchemes:
     bearerAuth:
