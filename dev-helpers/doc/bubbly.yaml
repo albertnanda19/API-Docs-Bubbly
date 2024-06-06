@@ -117,6 +117,111 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /products:
+    get:
+      tags:
+        - Product
+      summary: Mendapatkan daftar data dari semua produk yang ada.
+      description: Mendapatkan daftar data-data dari semua produk yang ada.
+      parameters:
+        - name: category
+          in: query
+          description: Id kategori produk
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Berhasil mendapatkan daftar produk.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Berhasil mendapatkan daftar produk
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: "28a77955-c1b9-4bfd-b0d0-6a4c5366a3f9"
+                        product_name:
+                          type: string
+                          example: "Product 1 in Electronics"
+                        price:
+                          type: number
+                          example: 10000
+                        description:
+                          type: string
+                          example: "Description for Product 1 in Electronics"
+                        category:
+                          type: string
+                          example: "Electronics"
+                        likes:
+                          type: integer
+                          example: 10
+                        store_name:
+                          type: string
+                          example: "Cassie Bakery"
+                        image:
+                          type: string
+                          example: ""
+                    example:
+                    - id: "28a77955-c1b9-4bfd-b0d0-6a4c5366a3f9"
+                      product_name: "Product 1 in Electronics"
+                      price: "10000"
+                      description: "Description for Product 1 in Electronics"
+                      category: "Electronics"
+                      likes: 10
+                      store_name: "Cassie Bakery"
+                      image: ""
+                    - id: "2062a5ee-0b60-46ec-856b-f80dc0fb3361"
+                      product_name: "Product 2 in Electronics"
+                      price: "20000"
+                      description: "Description for Product 2 in Electronics"
+                      category: "Electronics"
+                      likes: 20
+                      store_name: "Cassie Bakery"
+                      image: ""
+                    - id: "834c3334-f46e-4b39-8ef3-dcf05486c392"
+                      product_name: "Product 3 in Electronics"
+                      price: "30000"
+                      description: "Description for Product 3 in Electronics"
+                      category: "Electronics"
+                      likes: 30
+                      store_name: "Cassie Bakery"
+                      image: ""
+                    - id: "93c3df72-c2ea-49a4-8f51-2d4c524b045d"
+                      product_name: "Product 1 in Electronics"
+                      price: "10000"
+                      description: "Description for Product 1 in Electronics"
+                      category: "Electronics"
+                      likes: 10
+                      store_name: "Viels Design Studio"
+                      image: ""
+                    - id: "f6913d78-13e2-42dd-946a-30f5f3648dc6"
+                      product_name: "Product 2 in Electronics"
+                      price: "20000"
+                      description: "Description for Product 2 in Electronics"
+                      category: "Electronics"
+                      likes: 20
+                      store_name: "Viels Design Studio"
+                      image: ""
+                    - id: "dca0cbab-5674-49fb-900b-004e23c41f8f"
+                      product_name: "Product 3 in Electronics"
+                      price: "30000"
+                      description: "Description for Product 3 in Electronics"
+                      category: "Electronics"
+                      likes: 30
+                      store_name: "Viels Design Studio"
+                      image: ""
 components:
   securitySchemes:
     bearerAuth:
