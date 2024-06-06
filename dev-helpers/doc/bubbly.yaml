@@ -1,0 +1,186 @@
+openapi: 3.0.3
+info:
+  title: Bubbly
+  description: |-
+    Bubbly adalah aplikasi platform untuk mahasiswa Universitas Sam Ratulangi untuk menawarkan produk dan jasa yang mereka miliki kepada masyarakat luas khususnya di Manado.
+  version: 1.0.0
+servers:
+  - url: https://example.com/
+tags:
+  - name: Auth
+    description: Melakukan autentikasi
+  - name: Admin
+    description: Menampilkan dan mengelola data-data yang berhubungan dengan fitur-fitur yang dapat dilakukan oleh admin.
+  - name: Product
+    description: Menampilkan dan mengelola data-data yang berhubungan dengan data-data produk yang ada.
+  - name: Store
+    description: Menampilkan dan mengelola data-data yang berhubungan dengan data toko penjual.
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Melakukan login
+      description: Melakukan login menggunakan kredensial yang diperlukan yaitu NIS untuk siswa/i atau NIP untuk non-siswa/i
+      operationId: postLogin
+      security:
+          - bearerAuth: []
+      responses:
+        '200':
+          description: Berhasil login !
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Login berhasil !
+                  data:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJiYWNrLWVuZC1idWJibHkiLCJhdWQiOiJmcm9udC1lbmQtYnViYmx5IiwiaWF0IjoxNzE3NjU2ODQyLCJleHAiOjE3MTc2NjA0NDIsInN1YiI6IjQ1NzQzNzMwLThlNDEtNDRjYi1iY2MwLWM4NjdhYjI5YmVkNSIsImVtYWlsIjoiYnV5ZXIxQGV4YW1wbGUuY29tIiwicm9sZV9pZCI6IjkxYjk2NDUyLTBhNTQtNGZmNi1hZmJkLThjOTA2YWVjMmJkMSJ9.Iiz9RM-YOlG67bqYCAUE29rF7BjrW1IlOX54vQ982rZabU20SH18_ktoQizr3SMZSg-8C9mjdF7OHcSNblTzSftkARiDCpZIAjRFfk6xdA2yTgckeKIqgs_Yt-dA8pLV5FRo2tUP8c0J669XfXcWclQxyWA32Fdsi-EcBH_ccftl1VQVehsx5TRWBp3DWGVKg6PComgM3uFxNFzgJSJGb5_Sa4h8Zi92T5SQJmsqj73WaWT-l0EU_RMw7GSor4EZSiDfYdhfnxq0q_Hr7QAAVdbbDuCNh-ulGqrqkS-Iffls6PcMuLWERWBHQZktS5LTnZtMuywUfq4u8uUQYu0lNA"
+                      refresh_token:
+                        type: string
+                        example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJiYWNrLWVuZC1idWJibHkiLCJhdWQiOiJmcm9udC1lbmQtYnViYmx5IiwiaWF0IjoxNzE3NjU2ODQyLCJleHAiOjE3MTg4NjY0NDIsInN1YiI6IjQ1NzQzNzMwLThlNDEtNDRjYi1iY2MwLWM4NjdhYjI5YmVkNSJ9.Z4aMm3KiuE_zy1WDfSaUpdtLF4ltCWSVjvW099kh2xTbXiz-6z4F9lZOBttxzywkP_C4Eqf5v_G9Q-1PT96qggCE6y9xyCP9yfOdmTaewRn1pW8cgEimSCz1RUdcb8J-UmeGR_yc4jmRexkESHtu-lNhzCCw0I7qcrmwqqvmKvch9MjmVxpSQYusfi_wS0v3FBb1_cddstfogfFXxdNrGYnu8pjNFsrcCqlnlnaUkYBn7E1BGI_BuIvzK93YzCB3wV24-0id4_XwFyVmXMw9OBWKhBEP1UShCwd5z5L41MxgXcgFsZexTE5fHYGLlzT_28nQxdrB8T0TSkSLSmIi-g"
+        '400':
+          description:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Email atau password salah !
+                  data:
+                    example: null
+        '401':
+          $ref: '#/components/responses/InvalidToken'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /auth/refresh-token:
+    post:
+      tags:
+        - Auth
+      summary: Mendapatkan access token yang baru
+      description: Mendapatkan access token dan refresh token baru menggunakan refresh token yang didapatkan saat melakukan login sebelumnya.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refresh_token:
+                  type: string
+                  example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJiYWNrLWVuZC1idWJibHkiLCJhdWQiOiJmcm9udC1lbmQtYnViYmx5IiwiaWF0IjoxNzE3NjU3MzA4LCJleHAiOjE3MTg4NjY5MDgsInN1YiI6IjQ1NzQzNzMwLThlNDEtNDRjYi1iY2MwLWM4NjdhYjI5YmVkNSJ9.Vtnq42rrxPvtOnGyKp5D4V9zGqO7gcA1iQqvHNiyYgnpeM0OEJKMNQbpGHGTgiAJOQhSJfWDIInNj6Qr117MWF9vW_eAFbCtGVSxYFVTaB7MPP7YuMNgW4GV9tAmBj2aSaf0ddDVYBGGtr-un6c9EKXvosbCdT1qH96FhsP37YnNl9KVUdt_ZFAGZrcl5ntql1yQI4oAKtr_jAomO0W1iFd_0cKJnWHWnwBr_bkabndaZn2XQGV4h8hrqVwq5GMhFX77I80TYNCD-MOoXe2vdD_SRdxFQylE-4LXlSduyU7qTq5Iofv1UtQ-Kaf4ePHVUeE207VRrcGJwI1qXZR8lQ"
+      responses:
+        '200':
+          description: Berhasil mendapatkan access token dan refresh token baru
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Berhasil mendapatkan access token dan refresh token yang baru !
+                  data:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                      refresh_token:
+                        type: string
+                        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        '401':
+          $ref: '#/components/responses/InvalidToken'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    InvalidToken:
+      description: Token tidak valid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 401
+              message:
+                type: string
+                example: Token tidak valid
+              data:
+                example: null
+    MethodNotAllowed:
+      description: Method yang digunakan tidak sesuai
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 405
+              message:
+                type: string
+                example: HTTP method tidak sesuai
+              data:
+                example: null
+    InternalServerError:
+      description: Kesalahan pada Server
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 500
+              message:
+                type: string
+                example: Kesalahan pada server
+              data:
+                example: null
+    NotFound:
+      description: Data tidak ditemukan
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 404
+              message:
+                type: string
+                example: Not Found
+              data:
+                example: null
