@@ -477,6 +477,70 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+  /stores:
+    get:
+      tags:
+      - Store
+      summary: Mendapatkan daftar data dari semua toko yang ada
+      description: Mendapatkan daftar data-data dari semua toko yang ada
+      responses:
+        '200':
+          description: Berhasil mendapatkan daftar toko
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Berhasil mendapatkan data daftar toko
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: "15ce130e-87f6-4e15-804d-116e9de7c082"
+                        name:
+                          type: string
+                          example: "Cassie Bakery"
+                        logo:
+                          type: string
+                          example: "cassie_bakery_logo.png"
+                        address:
+                          type: string
+                          example: "Alamat Toko 1"
+                        seller_name:
+                          type: string
+                          example: "Seller One"
+              example:
+                status: 200
+                message: "Berhasil mendapatkan data daftar toko"
+                data:
+                - id: "15ce130e-87f6-4e15-804d-116e9de7c082"
+                  name: "Cassie Bakery"
+                  logo: "cassie_bakery_logo.png"
+                  address: "Alamat Toko 1"
+                  seller_name: "Seller One"
+                - id: "54f89a1c-0613-4ec1-bfc8-502d26b9e287"
+                  name: "Viels Design Studio"
+                  logo: "viels-image.jpg"
+                  address: "Alamat Toko 2"
+                  seller_name: "Seller Two"
+                - id: "0f4a7a15-c70f-4855-b738-ebe4ec89df43"
+                  name: "Syellys Cake and Bakery"
+                  logo: "shop-profile-syelly.png"
+                  address: "Alamat Toko 3"
+                  seller_name: "Seller Three"
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
 
 components:
   securitySchemes:
