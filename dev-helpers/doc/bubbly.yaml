@@ -226,6 +226,137 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '500':
           $ref: '#/components/responses/InternalServerError'
+
+  /store/{id_store}:
+    get:
+      tags:
+      - Store
+      summary: Mendapatkan data toko berdasarkan ID toko
+      description: Mendapatkan detail toko berdasarkan ID toko yang diberikan
+      operationId: getStoreById
+      parameters:
+      - name: id_store
+        in: path
+        description: ID toko yang ingin diperoleh informasinya
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Berhasil mendapatkan data toko
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Berhasil mendapatkan data toko
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: "15ce130e-87f6-4e15-804d-116e9de7c082"
+                      name:
+                        type: string
+                        example: "Cassie Bakery"
+                      logo:
+                        type: string
+                        example: "cassie_bakery_logo.png"
+                      address:
+                        type: string
+                        example: "Alamat Toko 1"
+                      followers:
+                        type: integer
+                        example: 2
+                      likes:
+                        type: integer
+                        example: 100
+                      seller:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: "2dec8cd3-25ea-4f6d-adbc-f02eb2020a3b"
+                          name:
+                            type: string
+                            example: "Seller One"
+                      products:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: "599c9090-5abb-437e-9359-4c332c24b857"
+                            name:
+                              type: string
+                              example: "Product 1 in Electronics"
+                            price:
+                              type: integer
+                              example: 10000
+                            image:
+                              type: string
+                              example: ""
+                    example:
+                      status: 200
+                      message: "Berhasil mendapatkan data toko"
+                      data:
+                        id: "15ce130e-87f6-4e15-804d-116e9de7c082"
+                        name: "Cassie Bakery"
+                        logo: "cassie_bakery_logo.png"
+                        address: "Alamat Toko 1"
+                        followers: 2
+                        likes: 100
+                        seller:
+                          id: "2dec8cd3-25ea-4f6d-adbc-f02eb2020a3b"
+                          name: "Seller One"
+                        products:
+                        - id: "599c9090-5abb-437e-9359-4c332c24b857"
+                          name: "Product 1 in Electronics"
+                          price: 10000
+                          image: ""
+                        - id: "5507945c-2158-4817-9b6b-fa102fc17c2d"
+                          name: "Product 2 in Electronics"
+                          price: 20000
+                          image: ""
+                        - id: "c1ac6ce6-2a30-4415-8f62-81fc1883ddc9"
+                          name: "Product 3 in Electronics"
+                          price: 30000
+                          image: ""
+                        - id: "25428aab-4f96-4349-8ae7-25efb762f866"
+                          name: "Product 1 in Clothing"
+                          price: 10000
+                          image: ""
+                        - id: "d303dae0-82c3-4339-8f14-a400192614f3"
+                          name: "Product 2 in Clothing"
+                          price: 20000
+                          image: ""
+                        - id: "152957ca-116d-4a72-8583-a651f44b4757"
+                          name: "Product 3 in Clothing"
+                          price: 30000
+                          image: ""
+                        - id: "638a2c98-6ada-4e99-8640-25c495788027"
+                          name: "Product 1 in Books"
+                          price: 10000
+                          image: ""
+                        - id: "2a2af016-3632-4099-9594-5e6384c574e0"
+                          name: "Product 2 in Books"
+                          price: 20000
+                          image: ""
+                        - id: "63a8b0b5-d446-40aa-b756-6866261fe76c"
+                          name: "Product 3 in Books"
+                          price: 30000
+                          image: ""
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
   /categories:
     get:
       tags:
